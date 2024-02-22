@@ -39,7 +39,7 @@ const checkEnvURL = () => {
   if (process.env.NODE_ENV == "development") {
     return "";
   } else {
-    return "/users";
+    return "/leader";
   }
 };
 
@@ -89,17 +89,41 @@ app.get(checkEnvURL() + "/data", async (req, res, next) => {
     LIMIT 10;
   `;
 
+    const areaQuery = (area) => {
+      return `SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url FROM posts WHERE area = '${area}' ORDER BY like_count DESC LIMIT 10;`;
+    };
+    const seoul = await client.query(areaQuery("seoul"));
+    const chungcheong = await client.query(areaQuery("chungcheong"));
+    const kangwon = await client.query(areaQuery("kangwon"));
+    const gyungi = await client.query(areaQuery("gyungi"));
+    const jeollanam = await client.query(areaQuery("jeollanam"));
+    const jeollabuk = await client.query(areaQuery("jeollabuk"));
+    const gyeongsangbuk = await client.query(areaQuery("gyeongsangbuk"));
+    const gyeongsangnam = await client.query(areaQuery("gyeongsangnam"));
+    const jeju = await client.query(areaQuery("jeju"));
+
     const likeResult = await client.query(likeQuery);
     const revisitResult = await client.query(revisitQuery);
     const elderResult = await client.query(elderQuery);
     const kidResult = await client.query(kidQuery);
-    console.log(likeResult.rows);
+
     // 결과를 JSON 형태로 클라이언트에 응답
     res.json({
       like: likeResult.rows,
       revisit: revisitResult.rows,
       elder: elderResult.rows,
       kid: kidResult.rows,
+      area: {
+        seoul: seoul.rows,
+        chungcheong: chungcheong.rows,
+        kangwon: kangwon.rows,
+        gyungi: gyungi.rows,
+        jeollanam: jeollanam.rows,
+        jeollabuk: jeollabuk.rows,
+        gyeongsangbuk: gyeongsangbuk.rows,
+        gyeongsangnam: gyeongsangnam.rows,
+        jeju: jeju.rows,
+      },
     });
   } catch (error) {
     console.error("Error executing query:", error.message);
