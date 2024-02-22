@@ -35,18 +35,26 @@ const pool = new Pool({
   idleTimeoutMillis: 30000, // 연결이 유휴 상태로 유지되는 시간 (밀리초)
 });
 
+const checkEnvURL = () => {
+  if (process.env.NODE_ENV == "development") {
+    return "";
+  } else {
+    return "/users";
+  }
+};
+
 //axios테스트
-app.get("/testget", (req, res, next) => {
+app.get(checkEnvURL() + "/testget", (req, res, next) => {
   res.json(JSON.stringify("리더보드 연결됐엉"));
 });
 
-app.post("/postest", (req, res) => {
+app.post(checkEnvURL() + "/postest", (req, res) => {
   console.log(req.body);
   req.body.message = "리더보드 성공했어!";
   res.json(req.body);
 });
 
-app.get("/data", async (req, res, next) => {
+app.get(checkEnvURL() + "/data", async (req, res, next) => {
   let client;
   try {
     client = await pool.connect();
