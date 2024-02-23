@@ -39,7 +39,7 @@ const checkEnvURL = () => {
   if (process.env.NODE_ENV == "development") {
     return "";
   } else {
-    return "/leader";
+    return "/leaderboards";
   }
 };
 
@@ -54,7 +54,7 @@ app.post(checkEnvURL() + "/postest", (req, res) => {
   res.json(req.body);
 });
 
-app.get(checkEnvURL() + "/data", async (req, res, next) => {
+app.get(checkEnvURL() + "/", async (req, res, next) => {
   let client;
   try {
     client = await pool.connect();
