@@ -73,18 +73,18 @@ app.get(checkEnvURL() + "/", async (req, res, next) => {
       LIMIT 10;
     `;
 
-    const elderQuery = `
+    const ELDERQuery = `
       SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
       FROM posts
-      WHERE travel_type = 'elder'
+      WHERE travel_type = 'ELDER'
       ORDER BY like_count DESC
       LIMIT 10;
     `;
 
-    const kidQuery = `
+    const KIDQuery = `
     SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
     FROM posts
-    WHERE travel_type = 'kid'
+    WHERE travel_type = 'KID'
     ORDER BY like_count DESC
     LIMIT 10;
   `;
@@ -104,16 +104,16 @@ app.get(checkEnvURL() + "/", async (req, res, next) => {
 
     const likeResult = await client.query(likeQuery);
     const revisitResult = await client.query(revisitQuery);
-    const elderResult = await client.query(elderQuery);
-    const kidResult = await client.query(kidQuery);
+    const ELDERResult = await client.query(ELDERQuery);
+    const KIDResult = await client.query(KIDQuery);
 
     // 결과를 JSON 형태로 클라이언트에 응답\
 
     res.json({
       like: likeResult.rows,
       revisit: revisitResult.rows,
-      elder: elderResult.rows,
-      kid: kidResult.rows,
+      ELDER: ELDERResult.rows,
+      KID: KIDResult.rows,
       area: {
         seoul: seoul.rows,
         chungcheong: chungcheong.rows,
@@ -165,18 +165,18 @@ app.listen(port, () => console.log("Server is running on : " + port));
 //       LIMIT 10;
 //     `;
 
-//     const elderQuery = `
+//     const ELDERQuery = `
 //       SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
 //       FROM posts
-//       WHERE travel_type = 'elder'
+//       WHERE travel_type = 'ELDER'
 //       ORDER BY like_count DESC
 //       LIMIT 10;
 //     `;
 
-//     const kidQuery = `
+//     const KIDQuery = `
 //     SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
 //     FROM posts
-//     WHERE travel_type = 'kid'
+//     WHERE travel_type = 'KID'
 //     ORDER BY like_count DESC
 //     LIMIT 10;
 //   `;
@@ -196,16 +196,16 @@ app.listen(port, () => console.log("Server is running on : " + port));
 
 //     const likeResult = await client.query(likeQuery);
 //     const revisitResult = await client.query(revisitQuery);
-//     const elderResult = await client.query(elderQuery);
-//     const kidResult = await client.query(kidQuery);
+//     const ELDERResult = await client.query(ELDERQuery);
+//     const KIDResult = await client.query(KIDQuery);
 
 //     // 결과를 JSON 형태로 클라이언트에 응답\
 
 //     console.log({
 //       like: likeResult.rows,
 //       revisit: revisitResult.rows,
-//       elder: elderResult.rows,
-//       kid: kidResult.rows,
+//       ELDER: ELDERResult.rows,
+//       KID: KIDResult.rows,
 //       area: {
 //         seoul: seoul.rows,
 //         chungcheong: chungcheong.rows,
