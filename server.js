@@ -95,7 +95,7 @@ app.get(checkEnvURL() + "/", async (req, res, next) => {
     const seoul = await client.query(areaQuery("seoul"));
     const chungcheong = await client.query(areaQuery("chungcheong"));
     const kangwon = await client.query(areaQuery("kangwon"));
-    const gyungi = await client.query(areaQuery("gyungi"));
+    const gyeonggi = await client.query(areaQuery("gyeonggi"));
     const jeollanam = await client.query(areaQuery("jeollanam"));
     const jeollabuk = await client.query(areaQuery("jeollabuk"));
     const gyeongsangbuk = await client.query(areaQuery("gyeongsangbuk"));
@@ -107,7 +107,8 @@ app.get(checkEnvURL() + "/", async (req, res, next) => {
     const elderResult = await client.query(elderQuery);
     const kidResult = await client.query(kidQuery);
 
-    // 결과를 JSON 형태로 클라이언트에 응답
+    // 결과를 JSON 형태로 클라이언트에 응답\
+
     res.json({
       like: likeResult.rows,
       revisit: revisitResult.rows,
@@ -117,7 +118,7 @@ app.get(checkEnvURL() + "/", async (req, res, next) => {
         seoul: seoul.rows,
         chungcheong: chungcheong.rows,
         kangwon: kangwon.rows,
-        gyungi: gyungi.rows,
+        gyeonggi: gyeonggi.rows,
         jeollanam: jeollanam.rows,
         jeollabuk: jeollabuk.rows,
         gyeongsangbuk: gyeongsangbuk.rows,
@@ -144,3 +145,86 @@ process.on("SIGINT", () => {
 });
 
 app.listen(port, () => console.log("Server is running on : " + port));
+
+// const fuc = async () => {
+//   let client;
+//   try {
+//     client = await pool.connect();
+
+//     const likeQuery = `
+//       SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
+//       FROM posts
+//       ORDER BY like_count DESC
+//       LIMIT 10;
+//     `;
+
+//     const revisitQuery = `
+//       SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
+//       FROM posts
+//       ORDER BY revisit_count DESC
+//       LIMIT 10;
+//     `;
+
+//     const elderQuery = `
+//       SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
+//       FROM posts
+//       WHERE travel_type = 'elder'
+//       ORDER BY like_count DESC
+//       LIMIT 10;
+//     `;
+
+//     const kidQuery = `
+//     SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url
+//     FROM posts
+//     WHERE travel_type = 'kid'
+//     ORDER BY like_count DESC
+//     LIMIT 10;
+//   `;
+
+//     const areaQuery = (area) => {
+//       return `SELECT post_id, user_id, title, like_count, desti_name, revisit_count, area, travel_type, desti_type, thumbnail_url FROM posts WHERE area = '${area}' ORDER BY like_count DESC LIMIT 10;`;
+//     };
+//     const seoul = await client.query(areaQuery("seoul"));
+//     const chungcheong = await client.query(areaQuery("chungcheong"));
+//     const kangwon = await client.query(areaQuery("kangwon"));
+//     const gyeonggi = await client.query(areaQuery("gyeonggi"));
+//     const jeollanam = await client.query(areaQuery("jeollanam"));
+//     const jeollabuk = await client.query(areaQuery("jeollabuk"));
+//     const gyeongsangbuk = await client.query(areaQuery("gyeongsangbuk"));
+//     const gyeongsangnam = await client.query(areaQuery("gyeongsangnam"));
+//     const jeju = await client.query(areaQuery("jeju"));
+
+//     const likeResult = await client.query(likeQuery);
+//     const revisitResult = await client.query(revisitQuery);
+//     const elderResult = await client.query(elderQuery);
+//     const kidResult = await client.query(kidQuery);
+
+//     // 결과를 JSON 형태로 클라이언트에 응답\
+
+//     console.log({
+//       like: likeResult.rows,
+//       revisit: revisitResult.rows,
+//       elder: elderResult.rows,
+//       kid: kidResult.rows,
+//       area: {
+//         seoul: seoul.rows,
+//         chungcheong: chungcheong.rows,
+//         kangwon: kangwon.rows,
+//         gyeonggi: gyeonggi.rows,
+//         jeollanam: jeollanam.rows,
+//         jeollabuk: jeollabuk.rows,
+//         gyeongsangbuk: gyeongsangbuk.rows,
+//         gyeongsangnam: gyeongsangnam.rows,
+//         jeju: jeju.rows,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error executing query:", error.message);
+//   } finally {
+//     if (client) {
+//       client.release(); // 클라이언트 반환
+//     }
+//   }
+// };
+
+// fuc();
