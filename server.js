@@ -43,6 +43,8 @@ const checkEnvURL = () => {
   }
 };
 
+//d
+
 //axios테스트
 app.get(checkEnvURL() + "/testget", (req, res, next) => {
   res.json(JSON.stringify("리더보드 연결됐엉"));
